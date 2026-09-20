@@ -6,6 +6,13 @@ window.ATA = (function () {
     return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
+  function setMeta(attr, key, value) {
+    if (!value) return;
+    let el = document.head.querySelector('meta[' + attr + '="' + key + '"]');
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+    el.setAttribute('content', value);
+  }
+
   function fmtDate(iso) {
     if (!iso) return '';
     const d = new Date(iso);
@@ -96,7 +103,16 @@ window.ATA = (function () {
       const r = await fetch(API + '/post?slug=' + encodeURIComponent(slug));
       if (!r.ok) throw new Error('post ' + r.status);
       const p = await r.json();
-      document.title = p.title + ' — All Things Asia';
+      document.title = p.title + ' — Roots in Korea';
+      setMeta('name', 'description', p.excerpt || '');
+      setMeta('property', 'og:title', p.title);
+      setMeta('property', 'og:description', p.excerpt || '');
+      setMeta('property', 'og:url', location.origin + '/post?slug=' + encodeURIComponent(slug));
+      setMeta('name', 'twitter:title', p.title);
+      setMeta('name', 'twitter:description', p.excerpt || '');
+      if (p.cover) { setMeta('property', 'og:image', p.cover); setMeta('name', 'twitter:image', p.cover); }
+      const canon = document.querySelector('link[rel=canonical]');
+      if (canon) canon.href = location.origin + '/post?slug=' + encodeURIComponent(slug);
       head.innerHTML = `${p.category ? `<div class="cat" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px">${esc(p.category)}</div>` : ''}
         <h1>${esc(p.title)}</h1>
         <div class="pmeta">${esc(fmtDate(p.published))}${p.author ? ' &middot; ' + esc(p.author) : ''}</div>

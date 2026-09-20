@@ -18,6 +18,7 @@ If `Slug` is empty, one is generated from the title.
 | `index.html` | Home: the 5-step search funnel, key numbers, latest posts |
 | `blog.html` | Blog index with category filters (from Notion) |
 | `post.html` | Single post reader (`post.html?slug=…`) |
+| `tour.html` | The tour program **Finding Your Roots in Korea** + booking |
 | `resources.html` | 5 resource sections: DNA, associations, records, living in Korea, trips |
 | `stats.html` | Korean adoption statistics with charts |
 | `assets/` | `site.css`, `site.js`, `orgs.js` (country associations), `stats.js` (data + charts) |
@@ -42,3 +43,12 @@ node dev-server.mjs   # http://localhost:8795
 - KOSIS table DT_11770N001
 - data.go.kr dataset 15127995 (보건복지부 입양 아동 현황)
 - Ministry of Health and Welfare Adoption Day press releases
+
+
+## Swapping in the payment link
+
+Open `tour.html` and search for `id="book-now"`. It is wrapped in a comment that says
+`REPLACE THIS HREF WITH YOUR PAYMENT / BOOKING PAGE LINK`.
+Change the `href` to your payment page and redeploy. Until then it points to the Google contact form.
+
+There is only one place to change. The second button ("Ask a question first") is meant to stay as the contact form.

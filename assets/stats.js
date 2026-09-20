@@ -24,7 +24,7 @@
     reasonLabels: ['Born to unmarried parents','Abandoned','Other (incl. protected birth)'],
     reason: {2022:[279,42,3], 2023:[167,54,8], 2024:[172,35,5], 2025:[90,29,21]}
   };
-  const PAL = ['#b0503a','#2f5d50','#c99a3f','#5b6f8c','#8a6a9e','#4f8a6d','#a9703f','#6b635a','#9aa7b5','#c2b49a','#7d8f7a'];
+  const PAL = ['#4a3fd4','#0f9d6b','#e08a3c','#2f7fe0','#8b5cf6','#d94f6a','#0f4a31','#77736b','#a6c8f7','#f0e483','#91d8b2'];
   const fmt = n => n.toLocaleString('en-US');
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -47,12 +47,12 @@
     const ticks = 4;
     for (let t = 0; t <= ticks; t++) {
       const v = (max / ticks) * t, yy = y(v);
-      s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="#e7ded0"/>`;
-      s += `<text x="${L - 9}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#7a7166">${fmt(Math.round(v))}</text>`;
+      s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="#e0dacb"/>`;
+      s += `<text x="${L - 9}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#77736b">${fmt(Math.round(v))}</text>`;
     }
     years.forEach((yr, i) => {
       if (i % 4 === 0 || i === years.length - 1)
-        s += `<text x="${x(i)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="#7a7166">${yr}</text>`;
+        s += `<text x="${x(i)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="#77736b">${yr}</text>`;
     });
     series.forEach((se, si) => {
       const c = se.c || PAL[si];
@@ -77,8 +77,8 @@
     let s = svgOpen(W, H);
     for (let t = 0; t <= 4; t++) {
       const v = (max / 4) * t, yy = y(v);
-      s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="#e7ded0"/>`;
-      s += `<text x="${L - 9}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#7a7166">${fmt(Math.round(v))}</text>`;
+      s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="#e0dacb"/>`;
+      s += `<text x="${L - 9}" y="${yy + 4}" text-anchor="end" font-size="11" fill="#77736b">${fmt(Math.round(v))}</text>`;
     }
     rows.forEach((r, i) => {
       let acc = 0;
@@ -89,8 +89,8 @@
           acc += v;
         }
       });
-      s += `<text x="${cx(i)}" y="${y(totals[i]) - 7}" text-anchor="middle" font-size="11" fill="#3d372f" font-weight="600">${fmt(totals[i])}</text>`;
-      s += `<text x="${cx(i)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="#7a7166">${cats[i]}</text>`;
+      s += `<text x="${cx(i)}" y="${y(totals[i]) - 7}" text-anchor="middle" font-size="11" fill="#121212" font-weight="600">${fmt(totals[i])}</text>`;
+      s += `<text x="${cx(i)}" y="${H - B + 18}" text-anchor="middle" font-size="11" fill="#77736b">${cats[i]}</text>`;
     });
     s += '</svg>';
     el.innerHTML = s + legend(keys.map((k, i) => ({ l: k, c: PAL[i] })));
@@ -104,8 +104,8 @@
   // ---- 1. trend
   const t1 = document.getElementById('c-trend');
   if (t1) lineChart(t1, D.years, [
-    { l: 'Domestic adoption', v: D.dom, c: '#2f5d50' },
-    { l: 'Overseas adoption', v: D.intl, c: '#b0503a' }
+    { l: 'Domestic adoption', v: D.dom, c: '#0f9d6b' },
+    { l: 'Overseas adoption', v: D.intl, c: '#4a3fd4' }
   ], { area: true });
 
   // ---- 2. countries (stacked, top countries only)
@@ -129,10 +129,10 @@
   // ---- 3. sex
   const c3 = document.getElementById('c-sex');
   if (c3) lineChart(c3, D.sex.map(r => r[0]), [
-    { l: 'Domestic — girls', v: D.sex.map(r => r[2]), c: '#2f5d50' },
-    { l: 'Domestic — boys', v: D.sex.map(r => r[1]), c: '#4f8a6d' },
-    { l: 'Overseas — boys', v: D.sex.map(r => r[3]), c: '#b0503a' },
-    { l: 'Overseas — girls', v: D.sex.map(r => r[4]), c: '#c99a3f' }
+    { l: 'Domestic — girls', v: D.sex.map(r => r[2]), c: '#0f9d6b' },
+    { l: 'Domestic — boys', v: D.sex.map(r => r[1]), c: '#7fd3ae' },
+    { l: 'Overseas — boys', v: D.sex.map(r => r[3]), c: '#4a3fd4' },
+    { l: 'Overseas — girls', v: D.sex.map(r => r[4]), c: '#e08a3c' }
   ]);
 
   // ---- 4. age table
